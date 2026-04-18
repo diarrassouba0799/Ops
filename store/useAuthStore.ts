@@ -21,15 +21,15 @@ interface VirementEnCours {
 interface AuthState {
   user: User | null
   isAuthenticated: boolean
-  step: 'login' | '2fa' | 'authenticated'
   solde: number
   avatar: string | null
   alerteSecurite: AlerteSecurite | null
   transactions: Transaction[]
   virementsEnCours: VirementEnCours[]
+  compteEnVerification: boolean
+  virementVerification: VirementEnCours | null
 
   login: (user: User) => void
-  setStep: (step: AuthState['step']) => void
   logout: () => void
   retirerMontant: (montant: number) => void
   setAvatar: (url: string) => void
@@ -37,6 +37,7 @@ interface AuthState {
   updateUser: (data: Partial<User>) => void
   ajouterTransaction: (t: Transaction) => void
   ajouterVirementEnCours: (v: VirementEnCours) => void
+  verifierVirementsExpires: () => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -44,32 +45,58 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       isAuthenticated: false,
-      step: 'login',
       solde: mockComptes[0].solde,
       avatar: null,
       alerteSecurite: null,
       transactions: mockTransactions,
       virementsEnCours: [],
+      compteEnVerification: false,
+      virementVerification: null,
 
-      login: (user) => set({ user, isAuthenticated: true, step: 'authenticated' }),
-      setStep: (step) => set({ step }),
+      login: (user) => {
+        set({ user, isAuthenticated: true })
+        setTimeout(() => get().verifierVirementsExpires(), 100)
+      },
+
       logout: () => set({
         user: null,
         isAuthenticated: false,
-        step: 'login',
         alerteSecurite: null,
       }),
+
       retirerMontant: (montant) =>
         set({ solde: Math.max(0, get().solde - montant) }),
+
       setAvatar: (url) => set({ avatar: url }),
+
       setAlerteSecurite: (alerte) => set({ alerteSecurite: alerte }),
+
       updateUser: (data) =>
         set({ user: get().user ? { ...get().user!, ...data } : null }),
+
       ajouterTransaction: (t) =>
         set({ transactions: [t, ...get().transactions] }),
+
       ajouterVirementEnCours: (v) =>
         set({ virementsEnCours: [v, ...get().virementsEnCours] }),
+
+      verifierVirementsExpires: () => {
+        const { virementsEnCours, compteEnVerification } = get()
+        if (compteEnVerification) return
+        const maintenant = Date.now()
+        const expire = virementsEnCours.find(
+          (v) => maintenant >= v.dateCreditPrevue
+        )
+        if (expire) {
+          set({
+            compteEnVerification: true,
+            virementVerification: expire,
+          })
+        }
+      },
     }),
-    { name: 'bnp-auth' }
+    {
+      name: 'bnp-auth-v2', // ← clé différente, repart proprement
+    }
   )
 )

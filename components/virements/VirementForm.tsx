@@ -67,55 +67,60 @@ export default function VirementForm() {
     setEtape('confirmation')
   }
 
-  async function handleValider2FA(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 1000))
+async function handleValider2FA(e: React.FormEvent) {
+  e.preventDefault()
+  setLoading(true)
+  await new Promise((r) => setTimeout(r, 1000))
 
-    if (!verifier2FA(code2fa)) {
-      setErrors({ code: 'Code incorrect. Réessayez.' })
-      setLoading(false)
-      return
-    }
-
-    const maintenant = Date.now()
-    const ref = `VIR-${maintenant}`
-    const dateStr = new Date().toISOString().split('T')[0]
-
-    // 1. Retrait immédiat du solde
-    retirerMontant(montantNum)
-
-    // 2. Ajouter dans les transactions avec statut "en cours"
-    ajouterTransaction({
-      id: ref,
-      date: dateStr,
-      libelle: `VIREMENT VERS ${form.beneficiaire.toUpperCase()}${form.motif ? ' - ' + form.motif : ''}`,
-      montant: -montantNum,
-      type: 'debit',
-      categorie: 'Virement',
-      compteId: 'c1',
-    })
-
-    // 3. Enregistrer le virement en cours (décompte 48h)
-    ajouterVirementEnCours({
-      id: ref,
-      beneficiaire: form.beneficiaire,
-      montant: montantNum,
-      motif: form.motif,
-      dateEnvoi: maintenant,
-      dateCreditPrevue: maintenant + 48 * 60 * 60 * 1000,
-    })
-
-    // 4. Alerte sécurité si > 500€
-    if (estInhabituel) {
-      setAlerteSecurite({ active: true, montant: montantNum, beneficiaire: form.beneficiaire })
-    }
-
-    setReference(ref)
-    setDateEnvoi(maintenant)
-    setEtape('succes')
+  if (!verifier2FA(code2fa)) {
+    setErrors({ code: 'Code incorrect. Réessayez.' })
     setLoading(false)
+    return
   }
+
+  const maintenant = Date.now()
+  const ref = `VIR-${maintenant}`
+  const dateStr = new Date().toISOString().split('T')[0]
+
+  // 1. Retrait du solde
+  retirerMontant(montantNum)
+
+  // 2. Transaction dans l'historique
+  ajouterTransaction({
+    id: ref,
+    date: dateStr,
+    libelle: `VIREMENT VERS ${form.beneficiaire.toUpperCase()}${form.motif ? ' - ' + form.motif : ''}`,
+    montant: -montantNum,
+    type: 'debit',
+    categorie: 'Virement',
+    compteId: 'c1',
+  })
+
+  // 3. Virement en cours avec timestamp RÉEL
+  // Pour tester rapidement → remplace 48 * 60 * 60 * 1000 par 30 * 1000 (30 sec)
+  ajouterVirementEnCours({
+    id: ref,
+    beneficiaire: form.beneficiaire,
+    montant: montantNum,
+    motif: form.motif,
+    dateEnvoi: maintenant,
+    dateCreditPrevue: maintenant + 48 * 60 * 60 * 1000,
+  })
+
+  // 4. Alerte sécurité si > 500€
+  if (estInhabituel) {
+    setAlerteSecurite({
+      active: true,
+      montant: montantNum,
+      beneficiaire: form.beneficiaire,
+    })
+  }
+
+  setReference(ref)
+  setDateEnvoi(maintenant)
+  setEtape('succes')
+  setLoading(false)
+}
 
   // ── Succès ────────────────────────────────────────────────
   if (etape === 'succes') {
