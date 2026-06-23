@@ -132,7 +132,7 @@ export default function CompteVerification() {
 
         {/* Footer */}
         <p className="text-center text-gray-600 text-xs pb-4">
-          BNP Paribas · Sécurité ·{' '}
+          CREDIT MUTUEL · Sécurité ·{' '}
           Réf. {virementVerification?.id?.slice(-10)}
         </p>
       </div>

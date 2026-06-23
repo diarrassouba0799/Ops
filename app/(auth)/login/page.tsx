@@ -192,7 +192,7 @@ export default function LoginPage() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-1">Verification</h2>
             <p className="text-sm text-gray-500">
-              Code envoye par SMS au +33 7 xx xx xx 09
+              Code envoye par SMS au +33 7 xx xx xx 03
             </p>
           </div>
           <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 mb-5">
