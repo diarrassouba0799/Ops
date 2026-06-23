@@ -74,7 +74,7 @@ function LogoLaBanquePostale({ dark = false }: { dark?: boolean }) {
       <div className="leading-tight">
         <p className="text-[9px] font-bold tracking-wider" style={{ color }}>LA</p>
         <p className="text-[9px] font-bold tracking-wider" style={{ color }}>BANQUE</p>
-        <p className="text-[9px] font-bold tracking-wider" style={{ color }}>POSTALE</p>
+        <p className="text-[9px] font-bold tracking-wider" style={{ color }}>CREDIT MUTUEL</p>
       </div>
     </div>
   )
