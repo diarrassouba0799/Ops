@@ -15,8 +15,8 @@ export default function ParametresClient() {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const [prenom, setPrenom] = useState(user?.prenom || 'Martine')
-  const [nom, setNom] = useState(user?.nom || 'Lafontaine')
-  const [email, setEmail] = useState(user?.email || 'martinelafontaine2027@gmail.com')
+  const [nom, setNom] = useState(user?.nom || 'fontaine')
+  const [email, setEmail] = useState(user?.email || 'martinefontaine2027@gmail.com')
   const [telephone, setTelephone] = useState('+33 6 25 76 11 59')
   const [saved, setSaved] = useState(false)
 
