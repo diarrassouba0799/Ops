@@ -2,9 +2,9 @@ import { Compte, Transaction, Carte, User } from '@/types'
 
 export const mockUser: User = {
   id: '7858120491',
-  nom: 'Lafonte',
+  nom: 'Lafontaine',
   prenom: 'Martine',
-  email: 'martinelafonte1@gmail.com',
+  email: 'martinelafontaine2027@gmail.com',
 }
 
 export const mockComptes: Compte[] = [
@@ -47,7 +47,7 @@ export const mockTransactions: Transaction[] = [
 export const mockCartes: Carte[] = [
   {
     id: 'k1',
-    titulaire: 'MARTINE LAFONTE',
+    titulaire: 'MARTINE LAFONTAINE',
     numero: '4978 **** **** 3821',
     expiration: '09/27',
     type: 'visa',
@@ -57,7 +57,7 @@ export const mockCartes: Carte[] = [
   },
   {
     id: 'k2',
-    titulaire: 'MARTINE LAFONTE',
+    titulaire: 'MARTINE LAFONTAINE',
     numero: '5412 **** **** 7734',
     expiration: '03/26',
     type: 'mastercard',
