@@ -14,9 +14,9 @@ export default function ParametresClient() {
   const { user, avatar, logout, setAvatar, updateUser } = useAuthStore()
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const [prenom, setPrenom] = useState(user?.prenom || 'Christian')
-  const [nom, setNom] = useState(user?.nom || 'Agniel')
-  const [email, setEmail] = useState(user?.email || 'annadoux1@gmail.com')
+  const [prenom, setPrenom] = useState(user?.prenom || 'Martine')
+  const [nom, setNom] = useState(user?.nom || 'Lafonte')
+  const [email, setEmail] = useState(user?.email || 'martinelafonte1@gmail.com')
   const [telephone, setTelephone] = useState('+33 7 57 84 25 03')
   const [saved, setSaved] = useState(false)
 
