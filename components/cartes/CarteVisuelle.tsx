@@ -80,7 +80,7 @@ function LogoLaBanquePostale({ dark = false }: { dark?: boolean }) {
   )
 }
 
-function CarteVisuelleBlue({ carte, bloquee }: { carte: Carte; bloquee: boolean }) {
+function CarteVisuelleGreen({ carte, bloquee }: { carte: Carte; bloquee: boolean }) {
   return (
     <div
       className="relative rounded-2xl overflow-hidden select-none"
@@ -88,13 +88,13 @@ function CarteVisuelleBlue({ carte, bloquee }: { carte: Carte; bloquee: boolean 
         height: '210px',
         background: bloquee
           ? 'linear-gradient(135deg, #6b7280, #9ca3af)'
-          : 'linear-gradient(145deg, #003189 0%, #0050c8 30%, #1a6fd4 55%, #0a3fa0 80%, #002070 100%)',
+          : 'linear-gradient(145deg, #00915A 0%, #006B42 30%, #00a868 55%, #005535 80%, #003d26 100%)',
         boxShadow: bloquee
           ? '0 8px 24px rgba(0,0,0,0.2)'
-          : '0 8px 32px rgba(0,49,137,0.45)',
+          : '0 8px 32px rgba(0,145,90,0.45)',
       }}
     >
-      {/* Texture ondulée simulée */}
+      {/* Texture ondulée */}
       <div className="absolute inset-0 opacity-20"
         style={{
           backgroundImage: `repeating-linear-gradient(
@@ -111,7 +111,7 @@ function CarteVisuelleBlue({ carte, bloquee }: { carte: Carte; bloquee: boolean 
         style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.4), transparent)' }}
       />
 
-      {/* Logo WWF style (maison postale) */}
+      {/* Logo maison */}
       <div className="absolute top-4 left-4">
         <div
           className="w-10 h-10 rounded-lg flex items-center justify-center"
@@ -119,7 +119,7 @@ function CarteVisuelleBlue({ carte, bloquee }: { carte: Carte; bloquee: boolean 
         >
           <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
             <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-            <rect x="9" y="13" width="6" height="8" fill="rgba(0,49,137,0.6)" rx="1"/>
+            <rect x="9" y="13" width="6" height="8" fill="rgba(0,145,90,0.6)" rx="1"/>
           </svg>
         </div>
       </div>
@@ -141,7 +141,7 @@ function CarteVisuelleBlue({ carte, bloquee }: { carte: Carte; bloquee: boolean 
         </span>
       </div>
 
-      {/* Logo La Banque Postale + nom */}
+      {/* Logo + numéro */}
       <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
         <LogoLaBanquePostale dark={false} />
         <p className="text-white/80 font-mono text-[9px] tracking-wider">
@@ -185,7 +185,6 @@ function CarteVisuellePremier({ carte, bloquee }: { carte: Carte; bloquee: boole
           : '0 8px 32px rgba(180,140,30,0.45)',
       }}
     >
-      {/* Texture martelée dorée */}
       <div className="absolute inset-0 opacity-30"
         style={{
           backgroundImage: `radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 40%),
@@ -194,7 +193,6 @@ function CarteVisuellePremier({ carte, bloquee }: { carte: Carte; bloquee: boole
         }}
       />
 
-      {/* Puce + NFC + CB */}
       <div className="absolute top-14 left-4 flex items-center gap-3">
         <PuceEMV />
         <NFC color="#4a3000" />
@@ -203,7 +201,6 @@ function CarteVisuellePremier({ carte, bloquee }: { carte: Carte; bloquee: boole
         <LogoCB dark={true} />
       </div>
 
-      {/* VISA Premier */}
       <div className="absolute bottom-8 right-5 text-right">
         <p className="font-bold text-2xl italic tracking-tight"
           style={{ color: '#4a3000', fontFamily: 'Georgia, serif', textShadow: '0 1px 2px rgba(255,220,100,0.5)' }}>
@@ -214,7 +211,6 @@ function CarteVisuellePremier({ carte, bloquee }: { carte: Carte; bloquee: boole
         </p>
       </div>
 
-      {/* Logo La Banque Postale */}
       <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
         <LogoLaBanquePostale dark={true} />
         <p className="font-mono text-[9px] tracking-wider" style={{ color: '#6a4800' }}>
@@ -222,7 +218,6 @@ function CarteVisuellePremier({ carte, bloquee }: { carte: Carte; bloquee: boole
         </p>
       </div>
 
-      {/* Titulaire */}
       <div className="absolute bottom-12 left-4">
         <p className="text-xs font-semibold tracking-widest" style={{ color: '#3a2000' }}>
           {carte.titulaire}
@@ -255,7 +250,7 @@ export default function CarteVisuelle({ carte }: { carte: Carte }) {
       {isPremier ? (
         <CarteVisuellePremier carte={carte} bloquee={bloquee} />
       ) : (
-        <CarteVisuelleBlue carte={carte} bloquee={bloquee} />
+        <CarteVisuelleGreen carte={carte} bloquee={bloquee} />
       )}
 
       {/* Plafond */}
@@ -273,7 +268,7 @@ export default function CarteVisuelle({ carte }: { carte: Carte }) {
                 ? '#ef4444'
                 : isPremier
                   ? 'linear-gradient(90deg, #c8973a, #e8b84a)'
-                  : 'linear-gradient(90deg, #003189, #0050c8)',
+                  : 'linear-gradient(90deg, #00915A, #006B42)',
             }}
           />
         </div>
@@ -286,7 +281,7 @@ export default function CarteVisuelle({ carte }: { carte: Carte }) {
         className="w-full flex items-center justify-center gap-2 font-medium py-2.5 rounded-xl transition-colors text-sm"
         style={{
           background: bloquee
-            ? (isPremier ? '#c8973a' : '#003189')
+            ? (isPremier ? '#c8973a' : '#00915A')
             : '#ef4444',
           color: 'white',
         }}

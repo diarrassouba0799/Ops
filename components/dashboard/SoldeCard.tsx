@@ -9,12 +9,12 @@ export default function SoldeCard({ compte }: { compte: Compte }) {
   const [visible, setVisible] = useState(true)
 
   return (
-    <div className="bg-gradient-to-br from-[#003A8F] to-[#0055C8] rounded-2xl p-6 text-white shadow-lg">
+    <div className="bg-gradient-to-br from-[#00915A] to-[#006B42] rounded-2xl p-6 text-white shadow-lg">
       
       <div className="flex items-center justify-between mb-5">
         <div>
-          <p className="text-blue-100 text-sm font-medium">{compte.libelle}</p>
-          <p className="text-xs text-blue-200 mt-0.5 font-mono">
+          <p className="text-green-100 text-sm font-medium">{compte.libelle}</p>
+          <p className="text-xs text-green-200 mt-0.5 font-mono">
             {compte.iban.slice(0, 14)}...
           </p>
         </div>
@@ -28,7 +28,7 @@ export default function SoldeCard({ compte }: { compte: Compte }) {
       </div>
 
       <div className="mb-5">
-        <p className="text-blue-200 text-xs mb-1">Solde disponible</p>
+        <p className="text-green-100 text-xs mb-1">Solde disponible</p>
         <p className="text-3xl font-bold tracking-tight">
           {visible ? formatMontant(compte.solde) : '•••• €'}
         </p>
@@ -36,7 +36,7 @@ export default function SoldeCard({ compte }: { compte: Compte }) {
 
       <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 w-fit backdrop-blur-sm">
         <TrendingUp size={14} />
-        <span className="text-xs text-blue-100">+2 800,00 € ce mois</span>
+        <span className="text-xs text-green-100">+2 800,00 € ce mois</span>
       </div>
     </div>
   )

@@ -7,10 +7,10 @@ import { Send, PiggyBank, FileText, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
 
 const actions = [
-  { label: 'Virer', icon: Send, href: '/virements', color: 'bg-[#003189] text-white' },
-  { label: 'Epargner', icon: PiggyBank, href: '/dashboard', color: 'bg-[#0050c8] text-white' },
-  { label: 'Releves', icon: FileText, href: '/transactions', color: 'bg-[#1a6fd4] text-white' },
-  { label: 'Aide', icon: HelpCircle, href: '/dashboard', color: 'bg-gray-200 text-[#003189]' },
+  { label: 'Virer', icon: Send, href: '/virements', color: 'bg-[#00915A] text-white' },
+  { label: 'Epargner', icon: PiggyBank, href: '/dashboard', color: 'bg-[#00915A] text-white' },
+  { label: 'Releves', icon: FileText, href: '/transactions', color: 'bg-[#00915A] text-white' },
+  { label: 'Aide', icon: HelpCircle, href: '/dashboard', color: 'bg-gray-200 text-[#00915A]' },
 ]
 
 export default function DashboardPage() {

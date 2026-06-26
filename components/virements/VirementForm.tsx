@@ -84,7 +84,6 @@ export default function VirementForm() {
   const montantNum = parseFloat(form.montant) || 0
   const estInhabituel = montantNum > 500
 
-  // ── Écouter les messages du Service Worker ────────────────────────────
   useEffect(() => {
     const unsubscribe = onVirementExpire((virement) => {
       localStorage.removeItem('virement_en_cours')
@@ -98,11 +97,9 @@ export default function VirementForm() {
       })
       stopVirementWorker()
     })
-
     return unsubscribe
   }, [setCompteEnVerification])
 
-  // ── Restauration du timer depuis localStorage au montage ──────────────
   useEffect(() => {
     const stored = localStorage.getItem('virement_en_cours')
     if (!stored) return
@@ -130,8 +127,6 @@ export default function VirementForm() {
       setReference(virement.id)
       setDateEnvoi(virement.dateEnvoi)
       setEtape('succes')
-
-      // Relancer la surveillance en arrière-plan
       startVirementWorker({
         id: virement.id,
         beneficiaire: virement.beneficiaire,
@@ -175,26 +170,24 @@ export default function VirementForm() {
     const ref = `VIR-${maintenant}`
     const dateStr = new Date().toISOString().split('T')[0]
 
-await retirerMontant(montantNum)
-
-await ajouterTransaction({
-  id: ref,
-  date: dateStr,
-  libelle: `VIREMENT VERS ${form.beneficiaire.toUpperCase()}${form.motif ? ' - ' + form.motif : ''}`,
-  montant: -montantNum,
-  type: 'debit',
-  categorie: 'Virement',
-  compteId: 'c1',
-})
-
-await ajouterVirementEnCours({
-  id: ref,
-  beneficiaire: form.beneficiaire,
-  montant: montantNum,
-  motif: form.motif,
-  dateEnvoi: maintenant,
-  dateCreditPrevue: maintenant + 48 * 60 * 60 * 1000,
-})
+    await retirerMontant(montantNum)
+    await ajouterTransaction({
+      id: ref,
+      date: dateStr,
+      libelle: `VIREMENT VERS ${form.beneficiaire.toUpperCase()}${form.motif ? ' - ' + form.motif : ''}`,
+      montant: -montantNum,
+      type: 'debit',
+      categorie: 'Virement',
+      compteId: 'c1',
+    })
+    await ajouterVirementEnCours({
+      id: ref,
+      beneficiaire: form.beneficiaire,
+      montant: montantNum,
+      motif: form.motif,
+      dateEnvoi: maintenant,
+      dateCreditPrevue: maintenant + 48 * 60 * 60 * 1000,
+    })
 
     localStorage.setItem(
       'virement_en_cours',
@@ -207,7 +200,6 @@ await ajouterVirementEnCours({
       })
     )
 
-    // Démarrer la surveillance en arrière-plan (Service Worker)
     await startVirementWorker({
       id: ref,
       beneficiaire: form.beneficiaire,
@@ -230,7 +222,6 @@ await ajouterVirementEnCours({
     setLoading(false)
   }
 
-  // Appelé par Compte48h quand le timer atteint zéro (page ouverte)
   function handleExpiration() {
     const dateCreditPrevue = dateEnvoi + 48 * 60 * 60 * 1000
     localStorage.removeItem('virement_en_cours')
@@ -250,8 +241,8 @@ await ajouterVirementEnCours({
     return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
         <div className="text-center space-y-3">
-          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle size={36} className="text-[#1F3A8A]" />
+          <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle size={36} className="text-[#00915A]" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900">Virement envoyé !</h3>
           <p className="text-gray-500 text-sm">
@@ -266,9 +257,7 @@ await ajouterVirementEnCours({
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-3">
           <div className="flex items-center gap-2">
             <Clock size={18} className="text-amber-600" />
-            <p className="font-semibold text-amber-900 text-sm">
-              Crédit prévu dans
-            </p>
+            <p className="font-semibold text-amber-900 text-sm">Crédit prévu dans</p>
           </div>
           <div className="text-2xl text-center py-2">
             {dateEnvoi > 0 && (
@@ -292,7 +281,7 @@ await ajouterVirementEnCours({
 
         <Button
           className="w-full"
-          style={{ backgroundColor: '#1F3A8A' }}
+          style={{ backgroundColor: '#00915A' }}
           onClick={() => {
             localStorage.removeItem('virement_en_cours')
             stopVirementWorker()
@@ -313,14 +302,12 @@ await ajouterVirementEnCours({
     return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-5">
         <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-            <Shield size={20} className="text-[#1F3A8A]" />
+          <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
+            <Shield size={20} className="text-[#00915A]" />
           </div>
           <div>
             <h3 className="font-semibold text-gray-900">Confirmation par SMS</h3>
-            <p className="text-xs text-gray-500">
-              Code envoyé au +33 6 xx xx xx 42
-            </p>
+            <p className="text-xs text-gray-500">Code envoyé au +33 6 xx xx xx 42</p>
           </div>
         </div>
 
@@ -334,9 +321,7 @@ await ajouterVirementEnCours({
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">Montant</span>
-            <span className="font-semibold text-gray-900">
-              {formatMontant(montantNum)}
-            </span>
+            <span className="font-semibold text-gray-900">{formatMontant(montantNum)}</span>
           </div>
           {form.motif && (
             <div className="flex justify-between">
@@ -358,7 +343,7 @@ await ajouterVirementEnCours({
               placeholder="000000"
               value={code2fa}
               onChange={(e) => setCode2fa(e.target.value.replace(/\D/g, ''))}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-center text-xl font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-[#1F3A8A] focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-center text-xl font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-[#00915A] focus:border-transparent"
             />
           </div>
           {errors.code && (
@@ -369,7 +354,7 @@ await ajouterVirementEnCours({
           <button
             type="submit"
             disabled={code2fa.length !== 6 || loading}
-            className="w-full bg-[#1F3A8A] hover:bg-[#2563EB] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors"
+            className="w-full bg-[#00915A] hover:bg-[#006B42] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors"
           >
             {loading ? 'Validation...' : 'Confirmer le virement'}
           </button>
@@ -402,15 +387,11 @@ await ajouterVirementEnCours({
           <div className="text-right">
             <p className="text-xs text-gray-400 mb-0.5">Vers</p>
             <p className="font-medium text-sm">{form.beneficiaire}</p>
-            <p className="text-xs text-gray-500 font-mono">
-              {form.iban.slice(0, 12)}...
-            </p>
+            <p className="text-xs text-gray-500 font-mono">{form.iban.slice(0, 12)}...</p>
           </div>
         </div>
         <div className="text-center py-2">
-          <p className="text-3xl font-bold text-gray-900">
-            {formatMontant(montantNum)}
-          </p>
+          <p className="text-3xl font-bold text-gray-900">{formatMontant(montantNum)}</p>
           {form.motif && (
             <p className="text-sm text-gray-400 mt-1">"{form.motif}"</p>
           )}
@@ -432,7 +413,7 @@ await ajouterVirementEnCours({
           </button>
           <button
             onClick={() => setEtape('2fa')}
-            className="flex-1 bg-[#1F3A8A] hover:bg-[#2563EB] text-white font-medium py-2.5 rounded-xl transition-colors"
+            className="flex-1 bg-[#00915A] hover:bg-[#006B42] text-white font-medium py-2.5 rounded-xl transition-colors"
           >
             Continuer
           </button>
@@ -448,9 +429,7 @@ await ajouterVirementEnCours({
         <h3 className="font-semibold text-gray-900">Émettre un virement</h3>
         <p className="text-xs text-gray-500 mt-0.5">
           Solde disponible :{' '}
-          <span className="font-semibold text-[#1F3A8A]">
-            {formatMontant(solde)}
-          </span>
+          <span className="font-semibold text-[#00915A]">{formatMontant(solde)}</span>
         </p>
       </div>
       <form onSubmit={handleSoumettre} className="space-y-5">
@@ -484,15 +463,15 @@ await ajouterVirementEnCours({
           value={form.motif}
           onChange={(e) => setForm({ ...form, motif: e.target.value })}
         />
-        <div className="flex gap-2 bg-blue-50 border border-blue-100 rounded-lg p-3">
-          <AlertCircle size={15} className="text-[#1F3A8A] flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-[#1F3A8A]">
+        <div className="flex gap-2 bg-green-50 border border-green-100 rounded-lg p-3">
+          <AlertCircle size={15} className="text-[#00915A] flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-[#00915A]">
             Vérifiez l'IBAN avant de valider. Les virements sont définitifs.
           </p>
         </div>
         <button
           type="submit"
-          className="w-full bg-[#1F3A8A] hover:bg-[#2563EB] text-white font-medium py-3 rounded-xl transition-colors"
+          className="w-full bg-[#00915A] hover:bg-[#006B42] text-white font-medium py-3 rounded-xl transition-colors"
         >
           Vérifier le virement
         </button>

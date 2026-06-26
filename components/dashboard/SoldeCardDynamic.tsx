@@ -14,8 +14,8 @@ export default function SoldeCardDynamic() {
     <div
       className="relative rounded-2xl p-6 text-white overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #003189 0%, #0050c8 50%, #0a6eea 100%)',
-        boxShadow: '0 8px 32px rgba(0, 49, 137, 0.35)',
+        background: 'linear-gradient(135deg, #00915A 0%, #006B42 50%, #004d30 100%)',
+        boxShadow: '0 8px 32px rgba(0, 145, 90, 0.35)',
       }}
     >
       {/* Cercles décoratifs */}
@@ -31,8 +31,8 @@ export default function SoldeCardDynamic() {
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-blue-100 text-sm font-medium">{compte.libelle}</p>
-            <p className="text-xs text-blue-200 mt-0.5 font-mono">
+            <p className="text-green-100 text-sm font-medium">{compte.libelle}</p>
+            <p className="text-xs text-green-200 mt-0.5 font-mono">
               {compte.iban.slice(0, 14)}...
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function SoldeCardDynamic() {
         </div>
 
         <div className="mb-5">
-          <p className="text-blue-100 text-xs mb-1">Solde disponible</p>
+          <p className="text-green-100 text-xs mb-1">Solde disponible</p>
           <p className="text-4xl font-bold tracking-tight">
             {visible ? formatMontant(solde) : '•••••• €'}
           </p>
