@@ -73,7 +73,7 @@ function LogoLaBanquePostale({ dark = false }: { dark?: boolean }) {
       </svg>
       <div className="leading-tight">
         <p className="text-[9px] font-bold tracking-wider" style={{ color }}>LA</p>
-        <p className="text-[9px] font-bold tracking-wider" style={{ color }}>BAnQUE</p>
+        <p className="text-[9px] font-bold tracking-wider" style={{ color }}>BANQUE</p>
         <p className="text-[9px] font-bold tracking-wider" style={{ color }}>BNP PARIBAS</p>
       </div>
     </div>

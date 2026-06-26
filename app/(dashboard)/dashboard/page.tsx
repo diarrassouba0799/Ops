@@ -16,7 +16,7 @@ const actions = [
 export default function DashboardPage() {
   return (
     <div>
-      <Topbar title="Bonjour, christian
+      <Topbar title="Bonjour, Martine
 " />
       <div className="p-6 max-w-4xl mx-auto space-y-5">
         <AlerteSecurite />
